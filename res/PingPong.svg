@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+     width="180" height="380" viewBox="0 0 180 380">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2c2e34"/>
+      <stop offset="100%" stop-color="#1a1c20"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.85">
+      <stop offset="70%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="180" height="380" fill="url(#body)"/>
+  <rect width="180" height="380" fill="url(#vignette)"/>
+
+  <!-- Muted phosphor accent stripes -->
+  <rect x="0" y="36"  width="180" height="1" fill="#8a8e98"/>
+  <rect x="0" y="379" width="180" height="1" fill="#8a8e98"/>
+
+  <!-- Time readout — recessed black with faint phosphor border -->
+  <rect x="30" y="50" width="120" height="24" fill="#14161b" stroke="#3e424a" stroke-width="0.5" rx="2"/>
+
+  <!-- Section dividers — faint -->
+  <line x1="10" y1="96"  x2="170" y2="96"  stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="154" x2="170" y2="154" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="208" x2="170" y2="208" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="260" x2="170" y2="260" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="306" x2="170" y2="306" stroke="#3e424a" stroke-width="0.3"/>
+</svg>

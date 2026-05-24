@@ -1,0 +1,41 @@
+{
+  "slug": "SHLabs-Rikoshet",
+  "name": "SHLabs Rikoshet",
+  "version": "2.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "SHLabs",
+  "author": "SHLabs",
+  "authorEmail": "kevinschonholzer@gmail.com",
+  "authorUrl": "https://shlabs.kevinschoenholzer.com",
+  "pluginUrl": "https://shlabs.kevinschoenholzer.com/rikoschet/",
+  "manualUrl": "https://shlabs.kevinschoenholzer.com/rikoschet/",
+  "sourceUrl": "https://github.com/kevisc/rikoshet",
+  "donateUrl": "https://shlabs.kevinschoenholzer.com/donate/",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Gate",
+      "name": "Rikoshet Gate",
+      "description": "Tempo-synced rhythmic amplitude gate. Rate selects from 14 musical subdivisions (2 bars to 1/32, with dotted and triplet variants). Shape morphs hard square to raised cosine. Pulse Width sets duty cycle. Stereo Offset slips R-channel phase against L for width. Clock input drives sync; without clock it runs at the BPM knob's tempo. CV inputs for Rate, Shape, Depth, PW.",
+      "tags": ["Tremolo", "Effect", "VCA", "LFO"]
+    },
+    {
+      "slug": "PingPong",
+      "name": "Rikoshet PingPong",
+      "description": "Stereo ping-pong delay with cross-fed feedback. Tempo-synced (from clock input) or free (ms). Spread offsets the right channel time for tumbling repeats; Cross controls how much of the feedback crosses sides. Low/High Cut sit in the feedback path so repeats darken naturally. CV inputs for Time, Feedback, Mix.",
+      "tags": ["Delay", "Effect", "Reverb"]
+    },
+    {
+      "slug": "MultiTap",
+      "name": "Rikoshet MultiTap",
+      "description": "8-step pattern delay locked to a tempo-synced window. Per-tap level sliders distribute hits across the window; alternating L/R panning with Spread; level Decay tapers across taps; Feedback recirculates the whole pattern. CV inputs for window time, Decay, Feedback, Mix.",
+      "tags": ["Delay", "Effect", "Multiple"]
+    },
+    {
+      "slug": "Blend",
+      "name": "Rikoshet Blend",
+      "description": "Stereo A/B crossfader with input drive and equal-power curve. Companion utility for blending parallel chains of Rikoshet effects, or dry/wet around a serial chain. CV inputs for Mix and Drive.",
+      "tags": ["Mixer", "Utility", "Effect"]
+    }
+  ]
+}

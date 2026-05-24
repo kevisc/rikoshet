@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+     width="150" height="380" viewBox="0 0 150 380">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#2c2e34"/>
+      <stop offset="100%" stop-color="#1a1c20"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.85">
+      <stop offset="70%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Quiet dark body — almost flat, no graticule, no scanlines -->
+  <rect width="150" height="380" fill="url(#body)"/>
+  <rect width="150" height="380" fill="url(#vignette)"/>
+
+  <!-- Thin muted phosphor accent stripes (1 px) — barely there, just enough to register -->
+  <rect x="0" y="36"  width="150" height="1" fill="#8a8e98"/>
+  <rect x="0" y="379" width="150" height="1" fill="#8a8e98"/>
+
+  <!-- Rate readout: deeper black recess, faint phosphor border, no internal grid -->
+  <rect x="14" y="50" width="122" height="24" fill="#14161b" stroke="#3e424a" stroke-width="0.5" rx="2"/>
+
+  <!-- Section dividers — faint phosphor traces -->
+  <line x1="10" y1="132" x2="140" y2="132" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="192" x2="140" y2="192" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="244" x2="140" y2="244" stroke="#3e424a" stroke-width="0.3"/>
+  <line x1="10" y1="298" x2="140" y2="298" stroke="#3e424a" stroke-width="0.3"/>
+</svg>
