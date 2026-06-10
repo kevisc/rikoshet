@@ -16,11 +16,11 @@ that would otherwise take a rack-row of cabling to assemble by hand.
 
 ## Install
 
-Download the latest `.vcvplugin` from [Releases](https://github.com/kevisc/rikoshet/releases),
+Download the latest `.vcvplugin` from [Releases](https://github.com/shlabs-audio/rikoshet/releases),
 drop it into Rack's user plugin folder, and restart Rack. The modules appear
 under the **SHLabs** brand.
 
-Part of the [SHLabs](https://shlabs.kevinschoenholzer.com) catalog.
+Part of the [SHLabs](https://shlabs.ch) catalog.
 
 ## Build from source
 

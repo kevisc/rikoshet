@@ -5,12 +5,12 @@
   "license": "GPL-3.0-or-later",
   "brand": "SHLabs",
   "author": "SHLabs",
-  "authorEmail": "kevinschonholzer@gmail.com",
-  "authorUrl": "https://shlabs.kevinschoenholzer.com",
-  "pluginUrl": "https://shlabs.kevinschoenholzer.com/rikoschet/",
-  "manualUrl": "https://shlabs.kevinschoenholzer.com/rikoschet/",
-  "sourceUrl": "https://github.com/kevisc/rikoshet",
-  "donateUrl": "https://shlabs.kevinschoenholzer.com/donate/",
+  "authorEmail": "hello@shlabs.ch",
+  "authorUrl": "https://shlabs.ch",
+  "pluginUrl": "https://shlabs.ch/rikoschet/",
+  "manualUrl": "https://shlabs.ch/rikoschet/",
+  "sourceUrl": "https://github.com/shlabs-audio/rikoshet",
+  "donateUrl": "https://shlabs.ch/donate/",
   "changelogUrl": "",
   "modules": [
     {
