@@ -90,6 +90,10 @@ struct RkPingPong : Module {
 
         configOutput(L_OUTPUT,  "Audio L");
         configOutput(R_OUTPUT,  "Audio R");
+
+        // Bypass passes the dry L/R through instead of muting (insert-effect convention).
+        configBypass(L_INPUT, L_OUTPUT);
+        configBypass(R_INPUT, R_OUTPUT);
     }
 
     void onSampleRateChange() override {
@@ -222,7 +226,6 @@ struct RkPingPongPanelText : Widget {
         // RIKOSHET quiet-phosphor palette.
         const NVGcolor cLabel = nvgRGB(0xb4, 0xb8, 0xc0);
         const NVGcolor cSub   = nvgRGB(0x78, 0x7c, 0x84);
-        const NVGcolor cFaint = nvgRGB(0x3e, 0x42, 0x4a);
 
         auto txt = [&](float x, float y, const char* s, float sz, NVGcolor col,
                        int align, float spacing) {
@@ -240,7 +243,7 @@ struct RkPingPongPanelText : Widget {
         txt(W/2.f, 44, "TIME", 8.f, cLabel, C, 1.5f);
         if (module) {
             bool synced = module->params[RkPingPong::SYNC_PARAM].getValue() > 0.5f;
-            float bpm = (module->haveClock && synced) ? (60.f / module->clockPeriod)
+            float bpm = (module->haveClock && synced) ? clamp(60.f / module->clockPeriod, 10.f, 600.f)
                                                        : module->params[RkPingPong::BPM_PARAM].getValue();
             char buf[32];
             if (synced) {
@@ -295,8 +298,6 @@ struct RkPingPongPanelText : Widget {
         txt( 72, 318, "R IN",  6.5f, cLabel, C, 0.8f);
         txt(108, 318, "L OUT", 6.5f, cLabel, C, 0.8f);
         txt(153, 318, "R OUT", 6.5f, cLabel, C, 0.8f);
-
-        txt(W - 4, 374, "PING-PONG · RIKOSHET", 6.f, cFaint, R, 1.f);
     }
 };
 

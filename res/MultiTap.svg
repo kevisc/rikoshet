@@ -16,7 +16,7 @@
   <rect width="300" height="380" fill="url(#vignette)"/>
 
   <rect x="0" y="36"  width="300" height="1" fill="#8a8e98"/>
-  <rect x="0" y="379" width="300" height="1" fill="#8a8e98"/>
+  <rect x="0" y="378" width="300" height="1" fill="#8a8e98"/>
 
   <!-- Tap pattern display — recessed black scope-style with faint phosphor border -->
   <rect x="14" y="48" width="272" height="58" fill="#14161b" stroke="#3e424a" stroke-width="0.5" rx="2"/>

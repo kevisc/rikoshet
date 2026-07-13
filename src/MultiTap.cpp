@@ -98,6 +98,10 @@ struct RkMultiTap : Module {
 
         configOutput(L_OUTPUT,  "Audio L");
         configOutput(R_OUTPUT,  "Audio R");
+
+        // Bypass passes the dry L/R through instead of muting (insert-effect convention).
+        configBypass(L_INPUT, L_OUTPUT);
+        configBypass(R_INPUT, R_OUTPUT);
     }
 
     void onSampleRateChange() override {
@@ -203,8 +207,18 @@ struct RkMultiTap : Module {
             wetR += tR * w * gainR;
         }
 
-        lpL += lpC * (wetL - lpL);
-        lpR += lpC * (wetR - lpR);
+        // Feedback recirculates the whole pattern: take a single tap at the full
+        // window delay (not the summed wet) so the loop gain is exactly FB and the
+        // pattern repeats one window later, darkening through the HI CUT filter each
+        // pass. Feeding back the summed taps would scale the loop gain by the number
+        // of active taps and run away well below the FB = 90 % maximum.
+        float fbDelay = clamp(windowSamps, 1.f, sampleRate * kMaxDelaySec - 4.f);
+        double rfbL = (double)writeIdxL - (double)fbDelay - 1.0;
+        double rfbR = (double)writeIdxR - (double)fbDelay - 1.0;
+        while (rfbL < 0) rfbL += N;
+        while (rfbR < 0) rfbR += N;
+        lpL += lpC * (lagrange3(bufL, rfbL) - lpL);
+        lpR += lpC * (lagrange3(bufR, rfbR) - lpR);
 
         float vL = inputs[L_INPUT].getVoltage() / 5.f;
         float vR = inputs[R_INPUT].isConnected() ? inputs[R_INPUT].getVoltage() / 5.f : vL;
@@ -238,7 +252,6 @@ struct RkMultiTapPanelText : Widget {
 
         const NVGcolor cLabel = nvgRGB(0xb4, 0xb8, 0xc0);
         const NVGcolor cSub   = nvgRGB(0x78, 0x7c, 0x84);
-        const NVGcolor cFaint = nvgRGB(0x3e, 0x42, 0x4a);
 
         auto txt = [&](float x, float y, const char* s, float sz, NVGcolor col,
                        int align, float spacing) {
@@ -265,7 +278,7 @@ struct RkMultiTapPanelText : Widget {
         txt(W/2.f, 122, "WINDOW", 8.f, cLabel, C, 1.5f);
         if (module) {
             bool synced = module->params[RkMultiTap::SYNC_PARAM].getValue() > 0.5f;
-            float bpm = (module->haveClock && synced) ? (60.f / module->clockPeriod)
+            float bpm = (module->haveClock && synced) ? clamp(60.f / module->clockPeriod, 10.f, 600.f)
                                                        : module->params[RkMultiTap::BPM_PARAM].getValue();
             char buf[40];
             if (synced) {
@@ -315,8 +328,6 @@ struct RkMultiTapPanelText : Widget {
         txt(120, 326, "R IN",  6.5f, cLabel, C, 0.8f);
         txt(180, 326, "L OUT", 6.5f, cLabel, C, 0.8f);
         txt(240, 326, "R OUT", 6.5f, cLabel, C, 0.8f);
-
-        txt(W - 4, 374, "MULTI-TAP · RIKOSHET", 6.f, cFaint, R, 1.f);
     }
 };
 

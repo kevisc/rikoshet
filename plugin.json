@@ -1,17 +1,17 @@
 {
   "slug": "SHLabs-Rikoshet",
   "name": "SHLabs Rikoshet",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "GPL-3.0-or-later",
   "brand": "SHLabs",
   "author": "SHLabs",
   "authorEmail": "hello@shlabs.ch",
   "authorUrl": "https://shlabs.ch",
-  "pluginUrl": "https://shlabs.ch/rikoschet/",
-  "manualUrl": "https://shlabs.ch/rikoschet/",
+  "pluginUrl": "https://shlabs.ch/rikoshet/",
+  "manualUrl": "https://shlabs.ch/rikoshet/",
   "sourceUrl": "https://github.com/shlabs-audio/rikoshet",
   "donateUrl": "https://shlabs.ch/donate/",
-  "changelogUrl": "",
+  "changelogUrl": "https://github.com/shlabs-audio/rikoshet/blob/main/CHANGELOG.md",
   "modules": [
     {
       "slug": "Gate",

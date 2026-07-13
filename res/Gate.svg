@@ -18,7 +18,7 @@
 
   <!-- Thin muted phosphor accent stripes (1 px) — barely there, just enough to register -->
   <rect x="0" y="36"  width="150" height="1" fill="#8a8e98"/>
-  <rect x="0" y="379" width="150" height="1" fill="#8a8e98"/>
+  <rect x="0" y="378" width="150" height="1" fill="#8a8e98"/>
 
   <!-- Rate readout: deeper black recess, faint phosphor border, no internal grid -->
   <rect x="14" y="50" width="122" height="24" fill="#14161b" stroke="#3e424a" stroke-width="0.5" rx="2"/>

@@ -19,7 +19,7 @@ struct TRkLight : TBase {
 using RkLight = TRkLight<>;
 
 // RIKOSHET title strip — SHLabs steel grammar, pink family accent.
-// No glow halo, no bloom — just muted green text on the dark body.
+// No glow halo, no bloom — muted steel text with a pink accent bar on the dark body.
 struct RkModuleTitle : Widget {
     std::string text;
     float panelW;

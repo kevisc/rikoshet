@@ -61,7 +61,7 @@ struct RkGate : Module {
         configInput(L_INPUT,   "Audio L");
         configInput(R_INPUT,   "Audio R (normalled to L)");
         configInput(CLOCK_INPUT,"Clock (assumes quarter-note pulses)");
-        configInput(RATE_CV,   "Rate CV (±5 V → ±7 steps)");
+        configInput(RATE_CV,   "Rate CV (±10 V = full range)");
         configInput(SHAPE_CV,  "Shape CV (±5 V)");
         configInput(DEPTH_CV,  "Depth CV (±5 V)");
         configInput(PW_CV,     "PW CV (±5 V)");
@@ -69,6 +69,10 @@ struct RkGate : Module {
         configOutput(L_OUTPUT,    "Audio L");
         configOutput(R_OUTPUT,    "Audio R");
         configOutput(GATE_OUTPUT, "Gate envelope (0–10 V)");
+
+        // Bypass passes the dry L/R through instead of muting (insert-effect convention).
+        configBypass(L_INPUT, L_OUTPUT);
+        configBypass(R_INPUT, R_OUTPUT);
     }
 
     void onReset() override {
@@ -143,11 +147,6 @@ struct RkGate : Module {
 
         lights[GATE_LIGHT].setSmoothBrightness(smoothedL, args.sampleTime);
     }
-
-    json_t* dataToJson() override {
-        return json_object();
-    }
-    void dataFromJson(json_t*) override {}
 };
 
 // ----- Panel labels -----
@@ -172,7 +171,6 @@ struct RkGatePanelText : Widget {
         // RIKOSHET quiet-phosphor palette — desaturated, low-key.
         const NVGcolor cLabel = nvgRGB(0xb4, 0xb8, 0xc0);   // muted phosphor main
         const NVGcolor cSub   = nvgRGB(0x78, 0x7c, 0x84);   // dim phosphor
-        const NVGcolor cFaint = nvgRGB(0x3e, 0x42, 0x4a);   // faint graticule
 
         auto txt = [&](float x, float y, const char* s, float sz, NVGcolor col,
                        int align, float spacing) {
@@ -205,7 +203,7 @@ struct RkGatePanelText : Widget {
             const char* src;
             bool freeRun = module->params[RkGate::FREERUN_PARAM].getValue() > 0.5f;
             if (!freeRun && module->haveClock) {
-                bpm = 60.f / module->clockPeriod;
+                bpm = clamp(60.f / module->clockPeriod, 10.f, 600.f);
                 src = "CLK";
             } else {
                 bpm = module->params[RkGate::BPM_PARAM].getValue();
@@ -243,9 +241,6 @@ struct RkGatePanelText : Widget {
         txt( 78, 316, "L OUT", 6.5f, cLabel, C, 0.8f);
         txt(106, 316, "R OUT", 6.5f, cLabel, C, 0.8f);
         txt(134, 316, "GATE",  6.5f, cLabel, C, 0.8f);
-
-        // Faint footer
-        txt(W - 4, 374, "GATE · RIKOSHET", 6.f, cFaint, R, 1.f);
     }
 };
 

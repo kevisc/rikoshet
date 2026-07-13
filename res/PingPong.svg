@@ -17,7 +17,7 @@
 
   <!-- Muted phosphor accent stripes -->
   <rect x="0" y="36"  width="180" height="1" fill="#8a8e98"/>
-  <rect x="0" y="379" width="180" height="1" fill="#8a8e98"/>
+  <rect x="0" y="378" width="180" height="1" fill="#8a8e98"/>
 
   <!-- Time readout — recessed black with faint phosphor border -->
   <rect x="30" y="50" width="120" height="24" fill="#14161b" stroke="#3e424a" stroke-width="0.5" rx="2"/>

@@ -34,10 +34,14 @@ struct RkBlend : Module {
         configInput(B_L, "B L");
         configInput(B_R, "B R (normalled to B L)");
         configInput(MIX_CV,   "Mix CV (±5 V)");
-        configInput(DRIVE_CV, "Drive CV (±5 V)");
+        configInput(DRIVE_CV, "Drive CV (0–10 V)");
 
         configOutput(OUT_L, "Mix L");
         configOutput(OUT_R, "Mix R");
+
+        // Bypass passes the A pair straight to the output (crossfader "off" = A).
+        configBypass(A_L, OUT_L);
+        configBypass(A_R, OUT_R);
     }
 
     void process(const ProcessArgs&) override {
@@ -48,13 +52,15 @@ struct RkBlend : Module {
 
         float drive = clamp(params[DRIVE_PARAM].getValue()
                             + inputs[DRIVE_CV].getVoltage() / 10.f, 0.f, 1.f);
+        // Crossfade dry -> tanh-saturated by the drive amount, so the transfer
+        // curve is continuous at drive = 0 (exactly transparent). A hard on/off
+        // gate would step the gain and click when Drive is swept or CV-modulated
+        // through zero on loud material.
         float gain = 1.f + drive * 3.f;
-        if (drive > 0.01f) {
-            aL = std::tanh(aL * gain);
-            aR = std::tanh(aR * gain);
-            bL = std::tanh(bL * gain);
-            bR = std::tanh(bR * gain);
-        }
+        aL += drive * (std::tanh(aL * gain) - aL);
+        aR += drive * (std::tanh(aR * gain) - aR);
+        bL += drive * (std::tanh(bL * gain) - bL);
+        bR += drive * (std::tanh(bR * gain) - bR);
 
         float mix = clamp(params[MIX_PARAM].getValue()
                           + inputs[MIX_CV].getVoltage() / 10.f, 0.f, 1.f);
@@ -91,7 +97,6 @@ struct RkBlendPanelText : Widget {
 
         const NVGcolor cLabel = nvgRGB(0xb4, 0xb8, 0xc0);
         const NVGcolor cSub   = nvgRGB(0x78, 0x7c, 0x84);
-        const NVGcolor cFaint = nvgRGB(0x3e, 0x42, 0x4a);
 
         auto txt = [&](float x, float y, const char* s, float sz, NVGcolor col,
                        int align, float spacing) {
@@ -126,17 +131,15 @@ struct RkBlendPanelText : Widget {
         txt(28, 258, "L", 6.5f, cSub, C, 0.8f);
         txt(62, 258, "R", 6.5f, cSub, C, 0.8f);
 
-        // B pair (jacks at y=310); label baseline 296
+        // B pair (jacks at y=314); label baseline 296
         txt(W/2.f, 290, "B", 8.f, cLabel, C, 1.5f);
         txt(28, 296, "L", 6.5f, cSub, C, 0.8f);
         txt(62, 296, "R", 6.5f, cSub, C, 0.8f);
 
-        // Output (jacks at y=346); label baseline 332
+        // Output (jacks at y=350); label baseline 332
         txt(W/2.f, 328, "OUT", 7.f, cLabel, C, 1.f);
         txt(28, 336, "L", 6.5f, cSub, C, 0.8f);
         txt(62, 336, "R", 6.5f, cSub, C, 0.8f);
-
-        txt(W - 4, 374, "BLEND · RIKOSHET", 5.5f, cFaint, R, 1.f);
     }
 };
 

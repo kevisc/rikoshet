@@ -16,7 +16,7 @@
   <rect width="90" height="380" fill="url(#vignette)"/>
 
   <rect x="0" y="36"  width="90" height="1" fill="#8a8e98"/>
-  <rect x="0" y="379" width="90" height="1" fill="#8a8e98"/>
+  <rect x="0" y="378" width="90" height="1" fill="#8a8e98"/>
 
   <line x1="8" y1="94"  x2="82" y2="94"  stroke="#3e424a" stroke-width="0.3"/>
   <line x1="8" y1="148" x2="82" y2="148" stroke="#3e424a" stroke-width="0.3"/>
